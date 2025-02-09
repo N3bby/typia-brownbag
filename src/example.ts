@@ -1,4 +1,5 @@
 import {axios} from './util/axios';
+import {assert} from 'typia';
 
 // -- API --
 type User = {
@@ -7,10 +8,11 @@ type User = {
 }
 
 function fetchUsers(): User[] {
-    return [
-        axios.get<User>('user/john').data,
-        axios.get<User>('user/mark').data
-    ]
+     const users = [
+        axios.get<unknown>('user/john').data,
+        axios.get<unknown>('user/mark').data
+    ];
+     return assert<User[]>(users) // Boom! But doesn't enter the rest of our codebase!
 }
 // ----------
 
