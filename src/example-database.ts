@@ -1,4 +1,5 @@
 import {request} from './util/util';
+import {assertEquals, assertGuardEquals} from 'typia';
 
 const userStore: UserDbo[] = []
 
@@ -9,7 +10,7 @@ type UserDbo = {
 }
 
 function save(user: User) {
-    const dbo: UserDbo = { ...user }
+    const dbo: UserDbo = assertEquals<UserDbo>({ ...user })
     userStore.push(dbo) // Imagine this is a database call
 }
 // --------------
@@ -22,7 +23,7 @@ type User = {
 }
 
 function createNewUser(dto: CreateUserDto) {
-    const user: User = {...dto, view: `${dto.name} - ${dto.age}`}
+    const user: User = assertEquals<User>({...dto, view: `${dto.name} - ${dto.age}`})
     save(user)
 }
 // -------------
@@ -33,7 +34,8 @@ type CreateUserDto = {
     age: number
 }
 
-function postNewUser(dto: CreateUserDto) {
+function postNewUser(dto: unknown) {
+    assertGuardEquals<CreateUserDto>(dto)
     createNewUser(dto)
 }
 // ------------

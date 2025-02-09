@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "rm -rf dist && npx tsx && node dist/example.ts",
+    "start": "rm -rf dist && npx tsc && node dist/example.js",
+    "start-db": "rm -rf dist && npx tsc && node dist/example-database.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "ts-patch install && typia patch"
   },
